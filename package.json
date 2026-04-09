@@ -1,0 +1,6 @@
+/
+  package.json   ✅ (this step)
+  src/
+    App.tsx
+    main.tsx
+    index.css
