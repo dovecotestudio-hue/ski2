@@ -1,162 +1,93 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ski-nted</title>
-  </head>
-  <body>
-    <div id="app"></div>
+<style>
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #e5e7eb;
+  }
 
-    <script>
-      const app = document.getElementById("app");
+  .app {
+    max-width: 390px;
+    margin: 0 auto;
+    background: #f8fafc;
+    min-height: 100vh;
+    position: relative;
+  }
 
-      const items = [
-        {
-          id: 1,
-          title: "Atomic Redster Skis",
-          price: "£180",
-          location: "Birmingham",
-          image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80"
-        },
-        {
-          id: 2,
-          title: "Salomon Ski Boots",
-          price: "£95",
-          location: "Leeds",
-          image: "https://images.unsplash.com/photo-1486911278844-a81c5267e227?auto=format&fit=crop&w=800&q=80"
-        },
-        {
-          id: 3,
-          title: "Oakley Goggles",
-          price: "£60",
-          location: "Manchester",
-          image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80"
-        }
-      ];
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    font-weight: 700;
+    font-size: 20px;
+  }
 
-      let screen = "home";
-      let selected = null;
+  .search {
+    margin: 0 16px 12px;
+    padding: 12px;
+    border-radius: 14px;
+    border: none;
+    background: #fff;
+    width: calc(100% - 32px);
+  }
 
-      function render() {
-        app.innerHTML = `
-          <div style="max-width:390px;margin:0 auto;min-height:100vh;background:#f8fafc;font-family:Arial,sans-serif;position:relative;padding:16px;box-sizing:border-box;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <h2 style="margin:0;">Ski-nted</h2>
-              <div>🔔</div>
-            </div>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 16px 80px;
+  }
 
-            <div style="margin:12px 0;">
-              <input placeholder="Search ski gear..." style="width:100%;padding:12px;border:1px solid #ccc;border-radius:12px;box-sizing:border-box;" />
-            </div>
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
 
-            ${
-              screen === "home"
-                ? `
-              <div style="display:flex;gap:8px;margin-bottom:12px;overflow:auto;">
-                <div style="background:#fff;padding:8px 12px;border-radius:10px;">Skis</div>
-                <div style="background:#fff;padding:8px 12px;border-radius:10px;">Boots</div>
-                <div style="background:#fff;padding:8px 12px;border-radius:10px;">Clothing</div>
-                <div style="background:#fff;padding:8px 12px;border-radius:10px;">Safety</div>
-              </div>
+  .card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+  }
 
-              <h3 style="margin:8px 0 12px;">Recommended</h3>
+  .card-body {
+    padding: 10px;
+  }
 
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-bottom:80px;">
-                ${items
-                  .map(
-                    (item) => `
-                  <div onclick="openProduct(${item.id})" style="background:#fff;border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
-                    <img src="${item.image}" style="width:100%;height:130px;object-fit:cover;display:block;" />
-                    <div style="padding:10px;">
-                      <div style="font-size:13px;font-weight:600;">${item.title}</div>
-                      <div style="font-weight:700;margin-top:4px;">${item.price}</div>
-                      <div style="font-size:11px;color:#666;margin-top:4px;">${item.location}</div>
-                    </div>
-                  </div>
-                `
-                  )
-                  .join("")}
-              </div>
-            `
-                : ""
-            }
+  .price {
+    font-weight: 700;
+    margin-top: 4px;
+  }
 
-            ${
-              screen === "product" && selected
-                ? `
-              <div style="padding-bottom:80px;">
-                <button onclick="goHome()" style="border:none;background:#e5e7eb;border-radius:999px;padding:10px 12px;cursor:pointer;">← Back</button>
-                <img src="${selected.image}" style="width:100%;height:260px;object-fit:cover;border-radius:16px;margin-top:12px;" />
-                <h2 style="margin:14px 0 6px;">${selected.title}</h2>
-                <div style="font-size:24px;font-weight:800;margin-bottom:6px;">${selected.price}</div>
-                <div style="color:#666;margin-bottom:16px;">${selected.location}</div>
-                <button style="width:100%;padding:14px;background:#0ea5e9;color:#fff;border:none;border-radius:12px;font-weight:700;margin-bottom:10px;">Buy now</button>
-                <button style="width:100%;padding:14px;background:#e5e7eb;color:#111;border:none;border-radius:12px;font-weight:700;">Message seller</button>
-              </div>
-            `
-                : ""
-            }
+  .nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 390px;
+    margin: 0 auto;
+    background: #fff;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px;
+    border-top: 1px solid #ddd;
+  }
 
-            ${
-              screen === "sell"
-                ? `
-              <div style="padding-bottom:80px;">
-                <h2>Sell your gear</h2>
-                <input placeholder="Item name" style="width:100%;padding:12px;border:1px solid #ccc;border-radius:12px;box-sizing:border-box;margin-top:10px;" />
-                <input placeholder="Price" style="width:100%;padding:12px;border:1px solid #ccc;border-radius:12px;box-sizing:border-box;margin-top:10px;" />
-                <button style="width:100%;padding:14px;background:#0ea5e9;color:#fff;border:none;border-radius:12px;font-weight:700;margin-top:10px;">List item</button>
-              </div>
-            `
-                : ""
-            }
+  .btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    font-weight: 700;
+    margin-top: 10px;
+  }
 
-            ${
-              screen === "profile"
-                ? `
-              <div style="padding-bottom:80px;">
-                <h2>Your profile</h2>
-                <div style="background:#fff;border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
-                  <div style="font-weight:700;">SkiPro87</div>
-                  <div style="color:#666;margin-top:6px;">Listings, reviews, stats</div>
-                </div>
-              </div>
-            `
-                : ""
-            }
+  .primary {
+    background: #0ea5e9;
+    color: #fff;
+  }
 
-            <div style="position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #ddd;display:flex;justify-content:space-around;padding:12px 10px;">
-              <button onclick="setScreenTab('home')" style="border:none;background:none;font-size:16px;cursor:pointer;">🏠</button>
-              <button onclick="setScreenTab('sell')" style="border:none;background:none;font-size:16px;cursor:pointer;">➕</button>
-              <button onclick="setScreenTab('profile')" style="border:none;background:none;font-size:16px;cursor:pointer;">👤</button>
-            </div>
-          </div>
-        `;
-      }
-
-      function openProduct(id) {
-        selected = items.find((item) => item.id === id);
-        screen = "product";
-        render();
-      }
-
-      function goHome() {
-        screen = "home";
-        selected = null;
-        render();
-      }
-
-      function setScreenTab(next) {
-        screen = next;
-        if (next !== "product") selected = null;
-        render();
-      }
-
-      window.openProduct = openProduct;
-      window.goHome = goHome;
-      window.setScreenTab = setScreenTab;
-
-      render();
-    </script>
-  </body>
-</html>
+  .secondary {
+    background: #e5e7eb;
+  }
+</style>
