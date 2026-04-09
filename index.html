@@ -1,93 +1,689 @@
-<style>
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #e5e7eb;
-  }
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ski-nted</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #dbe4ee;
+      color: #0f172a;
+    }
+    .phone {
+      max-width: 390px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: #f8fafc;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(15, 23, 42, 0.12);
+    }
+    .top {
+      padding: 18px 16px 12px;
+      background: linear-gradient(180deg, #eef7ff 0%, #e3f0fb 45%, #f8fafc 100%);
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .brand {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .sub {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+      cursor: pointer;
+    }
+    .hero {
+      background: #0f172a;
+      color: #fff;
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+      margin-bottom: 12px;
+    }
+    .hero-kicker {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+    .hero-title {
+      margin-top: 6px;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.15;
+      max-width: 220px;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .stat {
+      background: rgba(255,255,255,.08);
+      border-radius: 16px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+    .stat strong {
+      display: block;
+      font-size: 13px;
+    }
+    .stat span {
+      display: block;
+      margin-top: 4px;
+      font-size: 10px;
+      color: #cbd5e1;
+    }
+    .search {
+      width: 100%;
+      border: 0;
+      border-radius: 16px;
+      background: #fff;
+      height: 44px;
+      padding: 0 14px;
+      font-size: 14px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+      outline: none;
+      margin-bottom: 12px;
+    }
+    .cats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .cat {
+      border: 0;
+      background: #fff;
+      border-radius: 16px;
+      padding: 10px 6px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      color: #334155;
+    }
+    .cat-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 8px;
+      font-size: 14px;
+    }
+    .content {
+      padding: 14px 16px 88px;
+    }
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .section-head h3 {
+      margin: 0;
+      font-size: 14px;
+    }
+    .section-link {
+      border: 0;
+      background: transparent;
+      color: #0891b2;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .seller-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 18px;
+      padding-bottom: 4px;
+    }
+    .seller-pill {
+      border: 0;
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+      cursor: pointer;
+    }
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 12px;
+      color: #334155;
+      flex-shrink: 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+      cursor: pointer;
+    }
+    .card-media {
+      position: relative;
+    }
+    .card-media img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      display: block;
+    }
+    .chip {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(15, 23, 42, 0.8);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+    .heart {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 30px;
+      height: 30px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,.92);
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+    }
+    .card-body {
+      padding: 10px;
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.25;
+      min-height: 32px;
+    }
+    .card-sub {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+    .card-price {
+      margin-top: 8px;
+      font-weight: 800;
+    }
+    .card-meta {
+      margin-top: 4px;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      max-width: 390px;
+      margin: 0 auto;
+      background: rgba(255,255,255,.97);
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      padding: 10px 12px 14px;
+      backdrop-filter: blur(10px);
+    }
+    .nav button {
+      border: 0;
+      background: transparent;
+      color: #64748b;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .nav .active {
+      color: #0891b2;
+      font-weight: 700;
+    }
+    .sell-wrap {
+      margin-top: -22px;
+      text-align: center;
+    }
+    .sell-main {
+      width: 58px;
+      height: 58px;
+      border-radius: 999px;
+      border: 0;
+      background: #0891b2;
+      color: #fff;
+      font-size: 26px;
+      box-shadow: 0 10px 24px rgba(8,145,178,.28);
+      cursor: pointer;
+    }
+    .page {
+      padding: 16px 16px 88px;
+    }
+    .back {
+      border: 0;
+      background: #e5e7eb;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+    .product-image {
+      width: 100%;
+      height: 290px;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+    .panel {
+      background: #fff;
+      border-radius: 20px;
+      padding: 16px;
+      margin-top: 14px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+    }
+    .badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .badge.green { background: #dcfce7; color: #15803d; }
+    .badge.gray { background: #f1f5f9; color: #475569; }
+    .product-title {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin: 0;
+    }
+    .muted {
+      color: #64748b;
+      font-size: 13px;
+    }
+    .big-price {
+      font-size: 30px;
+      font-weight: 800;
+      margin-top: 10px;
+    }
+    .specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .spec {
+      background: #f8fafc;
+      border-radius: 14px;
+      padding: 12px 10px;
+      font-size: 13px;
+      color: #475569;
+    }
+    .btn {
+      width: 100%;
+      height: 46px;
+      border-radius: 14px;
+      border: 0;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .btn-primary { background: #0891b2; color: #fff; }
+    .btn-secondary { background: #e5e7eb; color: #111827; }
+    .input {
+      width: 100%;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid #d1d5db;
+      padding: 0 14px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 16px;
+      margin-bottom: 14px;
+    }
+    .tab {
+      border: 0;
+      background: transparent;
+      border-radius: 12px;
+      padding: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #64748b;
+    }
+    .tab.active {
+      background: #fff;
+      color: #0f172a;
+      box-shadow: 0 2px 8px rgba(15,23,42,.06);
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
 
-  .app {
-    max-width: 390px;
-    margin: 0 auto;
-    background: #f8fafc;
-    min-height: 100vh;
-    position: relative;
-  }
+  <script>
+    const items = [
+      {
+        id: 1,
+        title: "Atomic Redster Skis",
+        price: "£180",
+        location: "Birmingham",
+        subtitle: "Excellent · 170cm",
+        description: "Fast carving setup with clean topsheets and minimal edge wear. Great for piste days.",
+        status: "live",
+        brand: "Atomic",
+        size: "170cm",
+        condition: "Excellent",
+        shipping: "Tracked 2-3 day delivery",
+        image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 2,
+        title: "Salomon Ski Boots",
+        price: "£95",
+        location: "Leeds",
+        subtitle: "Very good · 27.5",
+        description: "Comfortable all-day boots with strong heel hold and light cosmetic wear.",
+        status: "reserved",
+        brand: "Salomon",
+        size: "27.5",
+        condition: "Very good",
+        shipping: "Tracked postage",
+        image: "https://images.unsplash.com/photo-1486911278844-a81c5267e227?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 3,
+        title: "Oakley Goggles",
+        price: "£60",
+        location: "Manchester",
+        subtitle: "Great · Prizm lens",
+        description: "Large fit with clean lens and only minor marks on the strap clip.",
+        status: "live",
+        brand: "Oakley",
+        size: "One size",
+        condition: "Great",
+        shipping: "Royal Mail tracked",
+        image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 4,
+        title: "Helly Hansen Jacket",
+        price: "£72",
+        location: "Bristol",
+        subtitle: "Men's L · Waterproof shell",
+        description: "Solid resort jacket with sealed seams and lots of pocket space.",
+        status: "sold",
+        brand: "Helly Hansen",
+        size: "L",
+        condition: "Very good",
+        shipping: "Tracked next-day available",
+        image: "https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=900&q=80"
+      }
+    ];
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px;
-    font-weight: 700;
-    font-size: 20px;
-  }
+    let screen = "home";
+    let selectedId = 1;
+    let profileTab = "active";
 
-  .search {
-    margin: 0 16px 12px;
-    padding: 12px;
-    border-radius: 14px;
-    border: none;
-    background: #fff;
-    width: calc(100% - 32px);
-  }
+    function selectedItem() {
+      return items.find(i => i.id === selectedId);
+    }
 
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding: 0 16px 80px;
-  }
+    function setScreen(next) {
+      screen = next;
+      render();
+    }
 
-  .card {
-    background: #fff;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  }
+    function openItem(id) {
+      selectedId = id;
+      screen = "product";
+      render();
+    }
 
-  .card img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-  }
+    function setProfileTab(next) {
+      profileTab = next;
+      render();
+    }
 
-  .card-body {
-    padding: 10px;
-  }
+    function renderHome() {
+      return `
+        <div class="top">
+          <div class="topbar">
+            <div>
+              <div class="brand">Ski-nted</div>
+              <div class="sub">Buy and sell ski gear fast</div>
+            </div>
+            <button class="icon-btn">🔔</button>
+          </div>
 
-  .price {
-    font-weight: 700;
-    margin-top: 4px;
-  }
+          <div class="hero">
+            <div class="hero-kicker">Winter marketplace</div>
+            <div class="hero-title">Discover pre-loved mountain gear</div>
+            <div class="stats">
+              <div class="stat"><strong>12.4k</strong><span>Live items</span></div>
+              <div class="stat"><strong>4.9/5</strong><span>Seller rating</span></div>
+              <div class="stat"><strong>24h</strong><span>Avg sell time</span></div>
+            </div>
+          </div>
 
-  .nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    max-width: 390px;
-    margin: 0 auto;
-    background: #fff;
-    display: flex;
-    justify-content: space-around;
-    padding: 12px;
-    border-top: 1px solid #ddd;
-  }
+          <input class="search" placeholder="Search skis, boots, jackets..." />
 
-  .btn {
-    width: 100%;
-    padding: 14px;
-    border-radius: 14px;
-    border: none;
-    font-weight: 700;
-    margin-top: 10px;
-  }
+          <div class="cats">
+            <button class="cat"><div class="cat-icon">🎿</div>Skis</button>
+            <button class="cat"><div class="cat-icon">🥾</div>Boots</button>
+            <button class="cat"><div class="cat-icon">🧥</div>Clothing</button>
+            <button class="cat"><div class="cat-icon">🪖</div>Safety</button>
+          </div>
+        </div>
 
-  .primary {
-    background: #0ea5e9;
-    color: #fff;
-  }
+        <div class="content">
+          <div class="section-head">
+            <h3>Popular sellers</h3>
+            <button class="section-link">View all</button>
+          </div>
+          <div class="seller-row">
+            <button class="seller-pill"><div class="avatar">SP</div>SkiPro87</button>
+            <button class="seller-pill"><div class="avatar">TK</div>Tom K.</button>
+            <button class="seller-pill"><div class="avatar">MS</div>Maya S.</button>
+          </div>
 
-  .secondary {
-    background: #e5e7eb;
-  }
-</style>
+          <div class="section-head">
+            <h3>Recommended for you</h3>
+            <button class="section-link">Refresh</button>
+          </div>
+
+          <div class="grid">
+            ${items.map(item => `
+              <div class="card" onclick="openItem(${item.id})">
+                <div class="card-media">
+                  <img src="${item.image}" alt="${item.title}">
+                  <div class="chip">${item.status}</div>
+                  <button class="heart">♥</button>
+                </div>
+                <div class="card-body">
+                  <div class="card-title">${item.title}</div>
+                  <div class="card-sub">${item.subtitle}</div>
+                  <div class="card-price">${item.price}</div>
+                  <div class="card-meta">${item.location}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderProduct() {
+      const item = selectedItem();
+      return `
+        <div class="page">
+          <button class="back" onclick="setScreen('home')">←</button>
+
+          <img class="product-image" src="${item.image}" alt="${item.title}">
+
+          <div class="panel">
+            <div class="badges">
+              <span class="badge green">Buyer protection</span>
+              <span class="badge gray">2 days ago</span>
+            </div>
+            <h2 class="product-title">${item.title}</h2>
+            <div class="muted">${item.subtitle}</div>
+            <div class="big-price">${item.price}</div>
+
+            <div class="specs">
+              <div class="spec"><strong>Brand:</strong> ${item.brand}</div>
+              <div class="spec"><strong>Size:</strong> ${item.size}</div>
+              <div class="spec"><strong>Condition:</strong> ${item.condition}</div>
+              <div class="spec"><strong>Shipping:</strong> ${item.shipping}</div>
+            </div>
+
+            <p class="muted" style="margin-top:12px; line-height:1.5;">${item.description}</p>
+          </div>
+
+          <div class="panel">
+            <div style="display:flex; gap:12px; align-items:center;">
+              <div class="avatar">SP</div>
+              <div>
+                <div style="font-weight:800;">SkiPro87</div>
+                <div class="muted">${item.location}</div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary">Buy now</button>
+            <button class="btn btn-secondary">Message seller</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderSell() {
+      return `
+        <div class="page">
+          <h2 class="product-title">Sell your gear</h2>
+          <div class="muted" style="margin-top:4px;">List your ski items fast</div>
+          <input class="input" placeholder="Item title">
+          <input class="input" placeholder="Price">
+          <input class="input" placeholder="Condition">
+          <button class="btn btn-primary">List item</button>
+        </div>
+      `;
+    }
+
+    function renderProfile() {
+      const filtered = profileTab === "active"
+        ? items.filter(i => i.status !== "sold")
+        : profileTab === "sold"
+        ? items.filter(i => i.status === "sold")
+        : items.slice(0,2);
+
+      return `
+        <div class="page">
+          <div class="panel" style="margin-top:0;">
+            <div style="display:flex; gap:12px; align-items:center;">
+              <div class="avatar" style="width:54px;height:54px;">SP</div>
+              <div>
+                <div style="font-weight:800; font-size:18px;">SkiPro87</div>
+                <div class="muted">Verified seller · Birmingham</div>
+                <div class="muted">★ 4.9 rating · within 1h</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabs">
+            <button class="tab ${profileTab === "active" ? "active" : ""}" onclick="setProfileTab('active')">Active</button>
+            <button class="tab ${profileTab === "sold" ? "active" : ""}" onclick="setProfileTab('sold')">Sold</button>
+            <button class="tab ${profileTab === "saved" ? "active" : ""}" onclick="setProfileTab('saved')">Saved</button>
+          </div>
+
+          <div class="grid" style="padding:0;">
+            ${filtered.map(item => `
+              <div class="card" onclick="openItem(${item.id})">
+                <div class="card-media">
+                  <img src="${item.image}" alt="${item.title}">
+                  <div class="chip">${item.status}</div>
+                </div>
+                <div class="card-body">
+                  <div class="card-title">${item.title}</div>
+                  <div class="card-price">${item.price}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function render() {
+      const app = document.getElementById("app");
+
+      app.innerHTML = `
+        <div class="phone">
+          ${screen === "home" ? renderHome() : ""}
+          ${screen === "product" ? renderProduct() : ""}
+          ${screen === "sell" ? renderSell() : ""}
+          ${screen === "profile" ? renderProfile() : ""}
+
+          <div class="nav">
+            <button class="${screen === "home" || screen === "product" ? "active" : ""}" onclick="setScreen('home')">Buy</button>
+            <div class="sell-wrap">
+              <button class="sell-main" onclick="setScreen('sell')">+</button>
+              <div style="font-size:11px;color:#0891b2;font-weight:700;margin-top:4px;">Sell</div>
+            </div>
+            <button class="${screen === "profile" ? "active" : ""}" onclick="setScreen('profile')">Me</button>
+          </div>
+        </div>
+      `;
+    }
+
+    render();
+  </script>
+</body>
+</html>
